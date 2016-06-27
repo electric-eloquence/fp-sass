@@ -1,0 +1,16 @@
+{
+  "name": "fp-sass",
+  "version": "0.0.0",
+  "description": "Sass extension for Fepper",
+  "dependencies": {
+    "gulp-sass": "^2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electric-eloquence/fp-sass.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=4.0.0"
+  }
+}
