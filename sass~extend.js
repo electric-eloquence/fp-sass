@@ -13,7 +13,7 @@ const cssBldDir = utilsCore.pathResolve(conf.ui.paths.source.cssBld);
 const cssSrcDir = utilsCore.pathResolve(conf.ui.paths.source.cssSrc);
 
 gulp.task('sass', function () {
-  return gulp.src(cssSrcDir + '/css-processors/scss/*.scss')
+  return gulp.src(cssSrcDir + '/sass/*.s(a|c)ss')
     .pipe(plugins.sass({
       outputStyle: 'expanded',
       sourceComments: true
@@ -25,7 +25,7 @@ gulp.task('sass', function () {
 // This runs the CSS processor without outputting line comments.
 // You probably want this to process CSS destined for production.
 gulp.task('sass:no-comments', function () {
-  return gulp.src(cssSrcDir + '/css-processors/scss/*.scss')
+  return gulp.src(cssSrcDir + '/sass/*.s(a|c)ss')
     .pipe(plugins.sass({
       outputStyle: 'expanded',
       sourceComments: false
