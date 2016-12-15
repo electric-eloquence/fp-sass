@@ -1,31 +1,37 @@
 'use strict';
 
-var conf = global.conf;
-var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')();
-var runSequence = require('run-sequence');
-var utilsGulp = require('../../../gulp/utils');
+const conf = global.conf;
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins')();
+const runSequence = require('run-sequence');
+
+const appDir = global.appDir;
+const utilsCore = require(`${appDir}/core/lib/utils`);
+const utilsTask = require(`${appDir}/tasker/utils`);
+
+const cssBldDir = utilsCore.pathResolve(conf.ui.paths.source.cssBld);
+const cssSrcDir = utilsCore.pathResolve(conf.ui.paths.source.cssSrc);
 
 gulp.task('sass', function () {
-  return gulp.src('./' + conf.src + '/css-processors/scss/*.scss')
+  return gulp.src(cssSrcDir + '/css-processors/scss/*.scss')
     .pipe(plugins.sass({
       outputStyle: 'expanded',
       sourceComments: true
     }))
     .on('error', plugins.sass.logError)
-    .pipe(gulp.dest('./' + conf.src + '/_styles'));
+    .pipe(gulp.dest(cssBldDir));
 });
 
 // This runs the CSS processor without outputting line comments.
 // You probably want this to process CSS destined for production.
 gulp.task('sass:no-comments', function () {
-  return gulp.src('./' + conf.src + '/css-processors/scss/*.scss')
+  return gulp.src(cssSrcDir + '/css-processors/scss/*.scss')
     .pipe(plugins.sass({
       outputStyle: 'expanded',
       sourceComments: false
     }))
     .on('error', plugins.sass.logError)
-    .pipe(gulp.dest('./' + conf.src + '/_styles'));
+    .pipe(gulp.dest(cssBldDir));
 });
 
 gulp.task('sass:frontend-copy', function (cb) {
@@ -37,5 +43,5 @@ gulp.task('sass:frontend-copy', function (cb) {
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch('./' + conf.src + '/css-processors/scss/**/*.scss', ['sass']);
+  gulp.watch('sass/**', {cwd: cssSrcDir}, ['sass']);
 });

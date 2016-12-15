@@ -12,3 +12,5 @@ Add these tasks to `excludes/extend/custom.js`:
 
 There is also a 'sass:no-comments' task, which will output CSS without line 
 comments. You probably want this to process CSS destined for production.
+
+Create a `source/_styles/src/sass` directory and put all Sass code there.
