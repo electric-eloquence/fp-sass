@@ -23,7 +23,7 @@ gulp.task('sass', function () {
 
 // This runs the CSS processor without outputting line comments.
 // You probably want this to process CSS destined for production.
-gulp.task('sass:no-comments', function () {
+gulp.task('sass:no-comment', function () {
   return gulp.src(cssSrcDir + '/sass/*@(.sass|.scss)')
     .pipe(plugins.sass({
       outputStyle: 'expanded',
@@ -35,7 +35,7 @@ gulp.task('sass:no-comments', function () {
 
 gulp.task('sass:frontend-copy', function (cb) {
   runSequence(
-    'sass:compile-no-comments',
+    'sass:no-comment',
     'patternlab:copy-styles',
     cb
   );

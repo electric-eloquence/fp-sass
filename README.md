@@ -10,7 +10,7 @@ Add these tasks to `excludes/extend/custom.js`:
 * Under gulp task 'custom:watch'
   * 'sass:watch'
 
-There is also a 'sass:no-comments' task, which will output CSS without line 
+There is also a 'sass:no-comment' task, which will output CSS without line 
 comments. You probably want this to process CSS destined for production.
 
 Create a `source/_styles/src/sass` directory and put all Sass code there.
