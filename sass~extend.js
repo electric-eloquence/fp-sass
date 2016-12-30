@@ -21,6 +21,8 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(cssBldDir));
 });
 
+gulp.task('sass:once', ['sass']);
+
 // This runs the CSS processor without outputting line comments.
 // You probably want this to process CSS destined for production.
 gulp.task('sass:no-comment', function () {
