@@ -39,7 +39,7 @@ gulp.task('sass:no-comment', function () {
 gulp.task('sass:frontend-copy', function (cb) {
   runSequence(
     'sass:no-comment',
-    'patternlab:copy-styles',
+    'ui:copy-styles',
     cb
   );
 });
