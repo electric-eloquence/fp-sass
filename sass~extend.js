@@ -1,10 +1,9 @@
 'use strict';
 
 const gulp = require('gulp');
-const plugins = require('gulp-load-plugins')();
 const runSequence = require('run-sequence');
+const sass = require('gulp-sass');
 
-const appDir = global.appDir;
 const conf = global.conf;
 
 const cssBldDir = conf.ui.paths.source.cssBld;
@@ -12,11 +11,11 @@ const cssSrcDir = conf.ui.paths.source.cssSrc;
 
 gulp.task('sass', function () {
   return gulp.src(cssSrcDir + '/sass/*@(.sass|.scss)')
-    .pipe(plugins.sass({
+    .pipe(sass({
       outputStyle: 'expanded',
       sourceComments: true
     }))
-    .on('error', plugins.sass.logError)
+    .on('error', sass.logError)
     .pipe(gulp.dest(cssBldDir));
 });
 
@@ -26,11 +25,11 @@ gulp.task('sass:once', ['sass']);
 // You probably want this to process CSS destined for production.
 gulp.task('sass:no-comment', function () {
   return gulp.src(cssSrcDir + '/sass/*@(.sass|.scss)')
-    .pipe(plugins.sass({
+    .pipe(sass({
       outputStyle: 'expanded',
       sourceComments: false
     }))
-    .on('error', plugins.sass.logError)
+    .on('error', sass.logError)
     .pipe(gulp.dest(cssBldDir));
 });
 
