@@ -15,3 +15,6 @@ There is also a 'sass:no-comment' task, which will output CSS without line
 comments. You probably want this to process CSS destined for production.
 
 Create a `source/_styles/src/sass` directory and put all Sass code there.
+
+Running any of these tasks will write the compiled CSS to the 
+`paths.source.cssBld` directory as defined in `patternlab-config.json`.
