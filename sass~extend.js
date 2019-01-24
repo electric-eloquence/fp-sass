@@ -44,3 +44,7 @@ gulp.task('sass:frontend-copy', function (cb) {
 gulp.task('sass:watch', function () {
   gulp.watch('sass/**/*', {cwd: cssSrcDir}, ['sass']);
 });
+
+gulp.task('sass:watch-no-comment', function () {
+  gulp.watch('sass/**/*', {cwd: cssSrcDir}, ['sass:no-comment']);
+});
