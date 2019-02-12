@@ -65,7 +65,7 @@ sass:
 
 Furthermore, 
 <a href="https://github.com/sass/node-sass#options" target="_blank">any documented Sass option</a> 
-can be configured in `pref.yml` under the `sass` setting and submitted to Sass.
+can be configured in `pref.yml` under the `sass` setting.
 
 ### Tasks
 
