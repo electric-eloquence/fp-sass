@@ -352,23 +352,27 @@ describe('fp-sass', function () {
   });
 
   describe('fp sass:watch', function () {
-    before(function () {
+    before(function (done) {
       fs.readdir(srcCssBldDir, (err, files) => {
         rmSrcCssBldFiles(files);
 
         if (fs.existsSync(styleWatchSass)) {
           fs.unlinkSync(styleWatchSass);
         }
+
+        done();
       });
     });
 
-    after(function () {
+    after(function (done) {
       fs.readdir(srcCssBldDir, (err, files) => {
         rmSrcCssBldFiles(files);
 
         if (fs.existsSync(styleWatchSass)) {
           fs.unlinkSync(styleWatchSass);
         }
+
+        done();
       });
     });
 
@@ -397,23 +401,27 @@ describe('fp-sass', function () {
   });
 
   describe('fp sass:watch-no-comment', function () {
-    before(function () {
+    before(function (done) {
       fs.readdir(srcCssBldDir, (err, files) => {
         rmSrcCssBldFiles(files);
 
         if (fs.existsSync(styleWatchSass)) {
           fs.unlinkSync(styleWatchSass);
         }
+
+        done();
       });
     });
 
-    after(function () {
+    after(function (done) {
       fs.readdir(srcCssBldDir, (err, files) => {
         rmSrcCssBldFiles(files);
 
         if (fs.existsSync(styleWatchSass)) {
           fs.unlinkSync(styleWatchSass);
         }
+
+        done();
       });
     });
 

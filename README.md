@@ -94,6 +94,12 @@ can be configured in `pref.yml` under the `sass` setting and submitted to Sass.
 * Watches the `source/_styles/src/sass` directory for file modifications.
 * Triggers `sass` and overwrites CSS whether or not it has direct edits.
 
+#### `'sass:watch-no-comment'`
+* Usually under gulp task `'custom:watch'`.
+* Watches the `source/_styles/src/sass` directory for file modifications.
+* Triggers `sass:no-comment` and overwrites CSS whether or not it has direct 
+  edits.
+
 [snyk-image]: https://snyk.io/test/github/electric-eloquence/fp-sass/master/badge.svg
 [snyk-url]: https://snyk.io/test/github/electric-eloquence/fp-sass/master
 
