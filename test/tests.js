@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs-extra');
-const path = require('path');
+const {dirname, extname} = require('path');
 
 const expect = require('chai').expect;
 
@@ -43,11 +43,20 @@ const styleSass = `${srcCssSrcDir}/sass/style.sass`;
 const styleScss = `${srcCssSrcDir}/sass/local-pref.scss`;
 const styleWatchCss = `${srcCssBldDir}/watch-fixture.css`;
 const styleWatchSass = `${srcCssSrcDir}/sass/watch-fixture.sass`;
+const sourcemap = `${styleBld}.map`;
 const sassHtml = 'html\n  font-size: 62.5%\n';
 
 function rmSrcCssBldFiles(files) {
   for (let file of files) {
-    if (path.extname(file) === '.css') {
+    if (extname(file) === '.css') {
+      fs.unlinkSync(`${srcCssBldDir}/${file}`);
+    }
+  }
+}
+
+function rmSrcCssMapFiles(files) {
+  for (let file of files) {
+    if (extname(file) === '.map') {
       fs.unlinkSync(`${srcCssBldDir}/${file}`);
     }
   }
@@ -133,7 +142,6 @@ describe('fp-sass', function () {
     });
 
     describe('sourcemapping', function () {
-      const sourcemap = `${styleBld}.map`;
       let sourcemapExistsBefore;
 
       before(function () {
@@ -141,13 +149,43 @@ describe('fp-sass', function () {
           fs.unlinkSync(sourcemap);
         }
 
-        sourcemapExistsBefore = fs.existsSync(sourcemap);
-        pref.sass.sourceComments = false;
         pref.sass.sourceMap = true;
+      });
+
+      beforeEach(function (done) {
+        pref.sass.sourceComments = false;
+
+        fs.readdir(srcCssBldDir, (err, files) => {
+          rmSrcCssMapFiles(files);
+
+          sourcemapExistsBefore = fs.existsSync(sourcemap);
+
+          done();
+        });
       });
 
       after(function () {
         pref.sass.sourceComments = true;
+      });
+
+      it('should not write a sourcemap if configured to print line comments', function (done) {
+        pref.sass.sourceComments = true;
+
+        fp.runSequence(
+          'sass',
+          () => {
+            const sourcemapExistsAfter = fs.existsSync(sourcemap);
+            const styleBldCss = fs.readFileSync(styleBld, enc);
+
+            expect(sourcemapExistsBefore).to.equal(false);
+            expect(sourcemapExistsAfter).to.equal(false);
+            expect(styleBldCss).to.not.contain('/*# sourceMappingURL=');
+
+            pref.sass.sourceComments = false;
+
+            done();
+          }
+        );
       });
 
       it('should write a sourcemap inline if configured to so', function (done) {
@@ -196,7 +234,7 @@ describe('fp-sass', function () {
       });
 
       it('should write a sourcemap file with a custom sourceRoot if configured to so', function (done) {
-        pref.sass.sourceMapRoot = `${srcCssSrcDir}/sass`;
+        pref.sass.sourceMapRoot = '/foo/bar';
 
         fp.runSequence(
           'sass',
@@ -233,10 +271,10 @@ describe('fp-sass', function () {
         rmSrcCssBldFiles(files);
 
         if (fs.existsSync(styleBack)) {
-          fs.emptyDirSync(path.dirname(styleBack));
+          fs.emptyDirSync(dirname(styleBack));
         }
         if (fs.existsSync(styleBackAlt)) {
-          fs.emptyDirSync(path.dirname(styleBackAlt));
+          fs.emptyDirSync(dirname(styleBackAlt));
         }
 
         styleBackExistsBefore = fs.existsSync(styleBack);

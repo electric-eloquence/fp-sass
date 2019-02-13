@@ -63,8 +63,8 @@ sass:
   sourceMapEmbed: true
 ```
 
-Furthermore, 
-<a href="https://github.com/sass/node-sass#options" target="_blank">any documented Sass option</a> 
+Similarly, any 
+<a href="https://github.com/sass/node-sass#options" target="_blank">documented Sass option</a> 
 can be configured in `pref.yml` under the `sass` setting.
 
 ### Tasks
