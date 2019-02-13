@@ -144,12 +144,14 @@ describe('fp-sass', function () {
     describe('sourcemapping', function () {
       let sourcemapExistsBefore;
 
-      before(function () {
-        if (fs.existsSync(sourcemap)) {
-          fs.unlinkSync(sourcemap);
-        }
+      before(function (done) {
+        fs.readdir(srcCssBldDir, (err, files) => {
+          rmSrcCssMapFiles(files);
 
-        pref.sass.sourceMap = true;
+          pref.sass.sourceMap = true;
+
+          done();
+        });
       });
 
       beforeEach(function (done) {
@@ -302,8 +304,8 @@ describe('fp-sass', function () {
       expect(styleBldExistsBefore).to.equal(false);
       expect(styleLocalPrefExistsBefore).to.equal(false);
 
-      expect(styleBldCss).to.not.contain('/* line');
-      expect(styleLocalPrefCss).to.not.contain('/* line');
+      expect(styleBldCss).to.not.contain('/* line ');
+      expect(styleLocalPrefCss).to.not.contain('/* line ');
 
       expect(styleBldCss).to.equal(styleBackCss);
       expect(styleLocalPrefCss).to.equal(styleBackAltCss);
@@ -343,8 +345,8 @@ describe('fp-sass', function () {
       expect(styleBldExistsBefore).to.equal(false);
       expect(styleLocalPrefExistsBefore).to.equal(false);
 
-      expect(styleBldCss).to.not.contain('/* line');
-      expect(styleLocalPrefCss).to.not.contain('/* line');
+      expect(styleBldCss).to.not.contain('/* line ');
+      expect(styleLocalPrefCss).to.not.contain('/* line ');
     });
   });
 
@@ -476,7 +478,7 @@ describe('fp-sass', function () {
           expect(css).to.contain(cssBody);
           expect(css).to.contain(cssA);
           expect(css).to.contain(cssPseudoClass);
-          expect(css).to.not.contain('/* line');
+          expect(css).to.not.contain('/* line ');
 
           watcher.close();
           done();

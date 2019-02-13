@@ -86,7 +86,8 @@ gulp.task('sass', function () {
   let sourcemapsWrite = sourcemaps.write;
 
   // Do not write sourcemaps if pref.sass.sourceMap is falsey.
-  // Do not write sourcemaps if sourceComments === true, as the sourcemaps may be inaccurate and the linenos redundant.
+  // Do not write sourcemaps if sourceComments === true, as the sourcemaps may be inaccurate and the line comments
+  // redundant.
   if (!pref.sass.sourceMap || pref.sass.sourceComments) {
     sourcemapsInit = () => {
       return streamUntouched();
@@ -112,7 +113,7 @@ gulp.task('sass:frontend-copy', function (cb) {
 });
 
 // This runs the CSS processor without outputting line comments.
-// You probably want this to process CSS destined for production.
+// You probably want this to preprocess CSS destined for production.
 gulp.task('sass:no-comment', function () {
   const prefSassClone = Object.assign({}, pref.sass, {sourceComments: false});
 
