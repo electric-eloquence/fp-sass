@@ -85,7 +85,7 @@ describe('fp-sass', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleSassSass = fs.readFileSync(styleSass, enc);
 
-      expect(styleBldExistsBefore).to.equal(false);
+      expect(styleBldExistsBefore).to.be.false;
 
       expect(styleBldCss).to.contain(cssBody);
       expect(styleBldCss).to.contain(cssA);
@@ -100,7 +100,7 @@ describe('fp-sass', function () {
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
       const styleScssScss = fs.readFileSync(styleScss, enc);
 
-      expect(styleLocalPrefExistsBefore).to.equal(false);
+      expect(styleLocalPrefExistsBefore).to.be.false;
 
       expect(styleLocalPrefCss).to.contain(cssBody);
       expect(styleLocalPrefCss).to.contain(cssA);
@@ -179,8 +179,8 @@ describe('fp-sass', function () {
             const sourcemapExistsAfter = fs.existsSync(sourcemap);
             const styleBldCss = fs.readFileSync(styleBld, enc);
 
-            expect(sourcemapExistsBefore).to.equal(false);
-            expect(sourcemapExistsAfter).to.equal(false);
+            expect(sourcemapExistsBefore).to.be.false;
+            expect(sourcemapExistsAfter).to.be.false;
             expect(styleBldCss).to.not.contain('/*# sourceMappingURL=');
 
             pref.sass.sourceComments = false;
@@ -200,8 +200,8 @@ describe('fp-sass', function () {
             const sourcemapExistsAfter = fs.existsSync(sourcemap);
             const styleBldCss = fs.readFileSync(styleBld, enc);
 
-            expect(sourcemapExistsBefore).to.equal(false);
-            expect(sourcemapExistsAfter).to.equal(false);
+            expect(sourcemapExistsBefore).to.be.false;
+            expect(sourcemapExistsAfter).to.be.false;
             expect(styleBldCss).to.contain('/*# sourceMappingURL=data:application/json;');
 
             fs.copyFileSync(styleBld, `${pubCssBldDir}/sourcemap-inline.css`);
@@ -221,8 +221,8 @@ describe('fp-sass', function () {
             const sourcemapJson = fs.readJsonSync(sourcemap);
             const styleBldCss = fs.readFileSync(styleBld, enc);
 
-            expect(sourcemapExistsBefore).to.equal(false);
-            expect(sourcemapExistsAfter).to.equal(true);
+            expect(sourcemapExistsBefore).to.be.false;
+            expect(sourcemapExistsAfter).to.be.true;
             expect(sourcemapJson).to.have.property('version');
             expect(sourcemapJson).to.have.property('sources');
             expect(sourcemapJson).to.have.property('names');
@@ -245,8 +245,8 @@ describe('fp-sass', function () {
             const sourcemapJson = fs.readJsonSync(sourcemap);
             const styleBldCss = fs.readFileSync(styleBld, enc);
 
-            expect(sourcemapExistsBefore).to.equal(false);
-            expect(sourcemapExistsAfter).to.equal(true);
+            expect(sourcemapExistsBefore).to.be.false;
+            expect(sourcemapExistsAfter).to.be.true;
             expect(sourcemapJson.sourceRoot).to.equal(pref.sass.sourceMapRoot);
             expect(styleBldCss).to.contain('/*# sourceMappingURL=');
 
@@ -298,11 +298,11 @@ describe('fp-sass', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
 
-      expect(styleBackExistsBefore).to.equal(false);
-      expect(styleBackAltExistsBefore).to.equal(false);
+      expect(styleBackExistsBefore).to.be.false;
+      expect(styleBackAltExistsBefore).to.be.false;
 
-      expect(styleBldExistsBefore).to.equal(false);
-      expect(styleLocalPrefExistsBefore).to.equal(false);
+      expect(styleBldExistsBefore).to.be.false;
+      expect(styleLocalPrefExistsBefore).to.be.false;
 
       expect(styleBldCss).to.not.contain('/* line ');
       expect(styleLocalPrefCss).to.not.contain('/* line ');
@@ -342,8 +342,8 @@ describe('fp-sass', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
 
-      expect(styleBldExistsBefore).to.equal(false);
-      expect(styleLocalPrefExistsBefore).to.equal(false);
+      expect(styleBldExistsBefore).to.be.false;
+      expect(styleLocalPrefExistsBefore).to.be.false;
 
       expect(styleBldCss).to.not.contain('/* line ');
       expect(styleLocalPrefCss).to.not.contain('/* line ');
@@ -372,8 +372,8 @@ describe('fp-sass', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
 
-      expect(styleBldExistsBefore).to.equal(false);
-      expect(styleLocalPrefExistsBefore).to.equal(false);
+      expect(styleBldExistsBefore).to.be.false;
+      expect(styleLocalPrefExistsBefore).to.be.false;
 
       expect(styleBldCss).to.contain(cssBody);
       expect(styleBldCss).to.contain(cssA);
