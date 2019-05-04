@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/electric-eloquence/fp-sass#readme",
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=8.16.0"
   },
   "dependencies": {
     "gulp-sass": "^4.0.2",
