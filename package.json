@@ -1,6 +1,6 @@
 {
   "name": "fp-sass",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Sass extension for Fepper",
   "main": "sass~extend.js",
   "scripts": {
