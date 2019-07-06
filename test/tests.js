@@ -486,4 +486,13 @@ describe('fp-sass', function () {
       }, 100);
     });
   });
+
+  describe('help text', function () {
+    it('should print help text', function (done) {
+      fp.runSeq(
+        'sass:help',
+        done
+      );
+    });
+  });
 });
