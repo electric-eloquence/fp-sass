@@ -150,6 +150,7 @@ Tasks:
     fp sass:once                Same as 'fp sass'.
     fp sass:watch               Watch for modifications to Sass files and build when modified.
     fp sass:watch-no-comment    Like 'fp sass:watch' but without line comments.
+    fp sass:help                Print fp-sass tasks and descriptions.
 `;
 
   utils.info(out);
