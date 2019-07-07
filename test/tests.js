@@ -487,7 +487,7 @@ describe('fp-sass', function () {
     });
   });
 
-  describe('help text', function () {
+  describe('fp sass:help', function () {
     it('should print help text', function (done) {
       fp.runSeq(
         'sass:help',
