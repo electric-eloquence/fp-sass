@@ -74,7 +74,7 @@ describe('fp-sass', function () {
         styleBldExistsBefore = fs.existsSync(styleBld);
         styleLocalPrefExistsBefore = fs.existsSync(styleLocalPref);
 
-        fp.runSequence(
+        fp.runSeq(
           'sass',
           done
         );
@@ -127,7 +127,7 @@ describe('fp-sass', function () {
       pref.sass.outputStyle = 'compressed';
       pref.sass.sourceComments = false;
 
-      fp.runSequence(
+      fp.runSeq(
         'sass',
         () => {
           const styleBldCss = fs.readFileSync(styleBld, enc);
@@ -173,7 +173,7 @@ describe('fp-sass', function () {
       it('should not write a sourcemap if configured to print line comments', function (done) {
         pref.sass.sourceComments = true;
 
-        fp.runSequence(
+        fp.runSeq(
           'sass',
           () => {
             const sourcemapExistsAfter = fs.existsSync(sourcemap);
@@ -194,7 +194,7 @@ describe('fp-sass', function () {
         pref.sass.sourceMapContents = true;
         pref.sass.sourceMapEmbed = true;
 
-        fp.runSequence(
+        fp.runSeq(
           'sass',
           () => {
             const sourcemapExistsAfter = fs.existsSync(sourcemap);
@@ -214,7 +214,7 @@ describe('fp-sass', function () {
       });
 
       it('should write a sourcemap file if configured to do so', function (done) {
-        fp.runSequence(
+        fp.runSeq(
           'sass',
           () => {
             const sourcemapExistsAfter = fs.existsSync(sourcemap);
@@ -238,7 +238,7 @@ describe('fp-sass', function () {
       it('should write a sourcemap file with a custom sourceRoot if configured to so', function (done) {
         pref.sass.sourceMapRoot = '/foo/bar';
 
-        fp.runSequence(
+        fp.runSeq(
           'sass',
           () => {
             const sourcemapExistsAfter = fs.existsSync(sourcemap);
@@ -284,7 +284,7 @@ describe('fp-sass', function () {
         styleBldExistsBefore = fs.existsSync(styleBld);
         styleLocalPrefExistsBefore = fs.existsSync(styleLocalPref);
 
-        fp.runSequence(
+        fp.runSeq(
           'sass:frontend-copy',
           'frontend-copy',
           done
@@ -331,7 +331,7 @@ describe('fp-sass', function () {
         styleBldExistsBefore = fs.existsSync(styleBld);
         styleLocalPrefExistsBefore = fs.existsSync(styleLocalPref);
 
-        fp.runSequence(
+        fp.runSeq(
           'sass:no-comment',
           done
         );
@@ -361,7 +361,7 @@ describe('fp-sass', function () {
         styleBldExistsBefore = fs.existsSync(styleBld);
         styleLocalPrefExistsBefore = fs.existsSync(styleLocalPref);
 
-        fp.runSequence(
+        fp.runSeq(
           'sass:once',
           done
         );
