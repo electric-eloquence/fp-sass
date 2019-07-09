@@ -10,9 +10,6 @@ const utils = require('fepper-utils');
 const conf = global.conf;
 const pref = global.pref;
 
-const cssBldDir = conf.ui.paths.source.cssBld;
-const cssSrcDir = conf.ui.paths.source.cssSrc;
-
 // Set up pref.sass.
 pref.sass = pref.sass || {};
 
@@ -23,6 +20,18 @@ if (typeof pref.sass.outputStyle === 'undefined') {
 if (pref.sass.sourceComments !== false) {
   pref.sass.sourceComments = true;
 }
+
+const cssBldDir = conf.ui.paths.source.cssBld;
+const cssSrcDir = conf.ui.paths.source.cssSrc;
+
+const streamUntouched = () => new Transform({
+  readableObjectMode: true,
+  writableObjectMode: true,
+  transform(file, enc, cb) {
+    this.push(file);
+    cb();
+  }
+});
 
 function getSourcemapDest() {
   if (
@@ -67,17 +76,6 @@ function getSourceRoot() {
   }
 
   return;
-}
-
-function streamUntouched() {
-  return new Transform({
-    readableObjectMode: true,
-    writableObjectMode: true,
-    transform(file, enc, cb) {
-      this.push(file);
-      cb();
-    }
-  });
 }
 
 // Declare gulp tasks.
