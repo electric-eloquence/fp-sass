@@ -84,7 +84,7 @@ gulp.task('sass', function () {
   let sourcemapsInit = sourcemaps.init;
   let sourcemapsWrite = sourcemaps.write;
 
-  // Do not write sourcemaps if pref.sass.sourceMap is falsey.
+  // Do not write sourcemaps if pref.sass.sourceMap is falsy.
   // Do not write sourcemaps if sourceComments === true, as the sourcemaps may be inaccurate and the line comments
   // redundant.
   if (!pref.sass.sourceMap || pref.sass.sourceComments) {
