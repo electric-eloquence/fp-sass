@@ -81,7 +81,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('should render SASS syntax into CSS', function () {
+    it('renders SASS syntax into CSS', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleSassSass = fs.readFileSync(styleSass, enc);
 
@@ -96,7 +96,7 @@ describe('fp-sass', function () {
       expect(styleSassSass).to.not.contain('}');
     });
 
-    it('should render SCSS syntax into CSS', function () {
+    it('renders SCSS syntax into CSS', function () {
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
       const styleScssScss = fs.readFileSync(styleScss, enc);
 
@@ -111,7 +111,7 @@ describe('fp-sass', function () {
       expect(styleScssScss).to.contain('}');
     });
 
-    it('should print line comments by default', function () {
+    it('prints line comments by default', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
 
@@ -123,7 +123,7 @@ describe('fp-sass', function () {
       expect(styleLocalPrefCss).to.contain('/* line 13');
     });
 
-    it('should accept custom options', function (done) {
+    it('accepts custom options', function (done) {
       pref.sass.outputStyle = 'compressed';
       pref.sass.sourceComments = false;
 
@@ -170,7 +170,7 @@ describe('fp-sass', function () {
         pref.sass.sourceComments = true;
       });
 
-      it('should not write a sourcemap if configured to print line comments', function (done) {
+      it('does not write a sourcemap if configured to print line comments', function (done) {
         pref.sass.sourceComments = true;
 
         fp.runSeq(
@@ -190,7 +190,7 @@ describe('fp-sass', function () {
         );
       });
 
-      it('should write a sourcemap inline if configured to so', function (done) {
+      it('writes a sourcemap inline if configured to so', function (done) {
         pref.sass.sourceMapContents = true;
         pref.sass.sourceMapEmbed = true;
 
@@ -213,7 +213,7 @@ describe('fp-sass', function () {
         );
       });
 
-      it('should write a sourcemap file if configured to do so', function (done) {
+      it('writes a sourcemap file if configured to do so', function (done) {
         fp.runSeq(
           'sass',
           () => {
@@ -235,7 +235,7 @@ describe('fp-sass', function () {
         );
       });
 
-      it('should write a sourcemap file with a custom sourceRoot if configured to so', function (done) {
+      it('writes a sourcemap file with a custom sourceRoot if configured to so', function (done) {
         pref.sass.sourceMapRoot = '/foo/bar';
 
         fp.runSeq(
@@ -292,7 +292,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('should compile Sass without line comments and copy it to the backend', function () {
+    it('compiles Sass without line comments and copy it to the backend', function () {
       const styleBackCss = fs.readFileSync(styleBack, enc);
       const styleBackAltCss = fs.readFileSync(styleBackAlt, enc);
       const styleBldCss = fs.readFileSync(styleBld, enc);
@@ -311,7 +311,7 @@ describe('fp-sass', function () {
       expect(styleLocalPrefCss).to.equal(styleBackAltCss);
     });
 
-    it('should copy CSS without sourcemapping to the backend', function () {
+    it('copies CSS without sourcemapping to the backend', function () {
       const styleBackCss = fs.readFileSync(styleBack, enc);
       const styleBackAltCss = fs.readFileSync(styleBackAlt, enc);
 
@@ -338,7 +338,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('should not print line comments', function () {
+    it('does not print line comments', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
 
@@ -368,7 +368,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('should be alias for `fp sass`', function () {
+    it('is an alias for `fp sass`', function () {
       const styleBldCss = fs.readFileSync(styleBld, enc);
       const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
 
@@ -416,7 +416,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('should compile SASS into bld CSS with line comments when a SASS partial is modified', function (done) {
+    it('compiles SASS into bld CSS with line comments when a SASS partial is modified', function (done) {
       const sass = fs.readFileSync(styleSass, enc);
       const watcher = fp.tasks['sass:watch'].fn();
 
@@ -465,7 +465,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('should compile SASS into bld CSS without line comments when a SASS partial is modified', function (done) {
+    it('compiles SASS into bld CSS without line comments when a SASS partial is modified', function (done) {
       const sass = fs.readFileSync(styleSass, enc);
       const watcher = fp.tasks['sass:watch-no-comment'].fn();
 
@@ -488,7 +488,7 @@ describe('fp-sass', function () {
   });
 
   describe('fp sass:help', function () {
-    it('should print help text', function (done) {
+    it('prints help text', function (done) {
       fp.runSeq(
         'sass:help',
         done
