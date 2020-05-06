@@ -6,7 +6,9 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint *.js && eslint test/*.js",
-    "test": "nyc mocha --exit"
+    "test": "nyc mocha --exit",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -48,7 +50,8 @@
   },
   "dependencies": {
     "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-sourcemaps": "^2.6.4",
+    "snyk": "^1.319.0"
   },
   "devDependencies": {
     "chai": "4.x",
@@ -60,5 +63,6 @@
     "husky": "4.x",
     "mocha": "7.x",
     "nyc": "15.x"
-  }
+  },
+  "snyk": true
 }
