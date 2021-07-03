@@ -112,7 +112,6 @@ describe('fp-sass', function () {
 
     it('accepts custom options', function (done) {
       pref.sass.outputStyle = 'compressed';
-      pref.sass.sourceComments = false;
 
       fp.runSeq(
         'sass',
@@ -142,8 +141,6 @@ describe('fp-sass', function () {
       });
 
       beforeEach(function (done) {
-        pref.sass.sourceComments = false;
-
         fs.readdir(srcCssBldDir, (err, files) => {
           rmSrcCssMapFiles(files);
 
@@ -151,10 +148,6 @@ describe('fp-sass', function () {
 
           done();
         });
-      });
-
-      after(function () {
-        pref.sass.sourceComments = true;
       });
 
       it('writes a sourcemap inline if configured to so', function (done) {
@@ -259,7 +252,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('compiles Sass without line comments and copy it to the backend', function () {
+    it('compiles Sass and copy it to the backend', function () {
       const styleBackCss = fs.readFileSync(styleBack, enc);
       const styleBackAltCss = fs.readFileSync(styleBackAlt, enc);
       const styleBldCss = fs.readFileSync(styleBld, enc);
@@ -276,36 +269,6 @@ describe('fp-sass', function () {
 
       expect(styleBldCss).to.equal(styleBackCss);
       expect(styleLocalPrefCss).to.equal(styleBackAltCss);
-    });
-  });
-
-  describe('fp sass:no-comment', function () {
-    let styleBldExistsBefore;
-    let styleLocalPrefExistsBefore;
-
-    before(function (done) {
-      fs.readdir(srcCssBldDir, (err, files) => {
-        rmSrcCssBldFiles(files);
-
-        styleBldExistsBefore = fs.existsSync(styleBld);
-        styleLocalPrefExistsBefore = fs.existsSync(styleLocalPref);
-
-        fp.runSeq(
-          'sass:no-comment',
-          done
-        );
-      });
-    });
-
-    it('does not print line comments', function () {
-      const styleBldCss = fs.readFileSync(styleBld, enc);
-      const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
-
-      expect(styleBldExistsBefore).to.be.false;
-      expect(styleLocalPrefExistsBefore).to.be.false;
-
-      expect(styleBldCss).to.not.have.string('/* line ');
-      expect(styleLocalPrefCss).to.not.have.string('/* line ');
     });
   });
 
@@ -368,7 +331,7 @@ describe('fp-sass', function () {
       });
     });
 
-    it('compiles SASS into bld CSS with line comments when a SASS partial is modified', function (done) {
+    it('compiles SASS into bld CSS when a SASS partial is modified', function (done) {
       const sass = fs.readFileSync(styleSass, enc);
       const watcher = fp.tasks['sass:watch'].fn();
 
@@ -381,53 +344,6 @@ describe('fp-sass', function () {
           expect(css).to.have.string(cssBody);
           expect(css).to.have.string(cssA);
           expect(css).to.have.string(cssPseudoClass);
-
-          watcher.close();
-          done();
-        }, 500);
-      }, 100);
-    });
-  });
-
-  describe('fp sass:watch-no-comment', function () {
-    before(function (done) {
-      fs.readdir(srcCssBldDir, (err, files) => {
-        rmSrcCssBldFiles(files);
-
-        if (fs.existsSync(styleWatchSass)) {
-          fs.unlinkSync(styleWatchSass);
-        }
-
-        done();
-      });
-    });
-
-    after(function (done) {
-      fs.readdir(srcCssBldDir, (err, files) => {
-        rmSrcCssBldFiles(files);
-
-        if (fs.existsSync(styleWatchSass)) {
-          fs.unlinkSync(styleWatchSass);
-        }
-
-        done();
-      });
-    });
-
-    it('compiles SASS into bld CSS without line comments when a SASS partial is modified', function (done) {
-      const sass = fs.readFileSync(styleSass, enc);
-      const watcher = fp.tasks['sass:watch-no-comment'].fn();
-
-      setTimeout(() => {
-        fs.writeFileSync(styleWatchSass, sass + sassHtml);
-        setTimeout(() => {
-          const css = fs.readFileSync(styleWatchCss, enc);
-
-          expect(css).to.have.string(cssHtml);
-          expect(css).to.have.string(cssBody);
-          expect(css).to.have.string(cssA);
-          expect(css).to.have.string(cssPseudoClass);
-          expect(css).to.not.have.string('/* line ');
 
           watcher.close();
           done();

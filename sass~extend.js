@@ -104,6 +104,7 @@ gulp.task('sass:watch', function () {
 // DEPRECATED.
 gulp.task('sass:watch-no-comment', function () {
   // Return the watcher so it can be closed after testing.
+  /* istanbul ignore next */
   return gulp.watch('sass/**/*', {cwd: cssSrcDir}, ['sass']);
 });
 
