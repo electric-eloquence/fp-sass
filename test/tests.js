@@ -17,7 +17,7 @@ const pubCssBldDir = conf.ui.paths.public.cssBld;
 const srcCssBldDir = conf.ui.paths.source.cssBld;
 const srcCssSrcDir = conf.ui.paths.source.cssSrc;
 
-const cssHtml = 'html {\n  font-size: 62.5%;\n}\n';
+const cssHtml = 'html {\n  font-size: 62.5%;\n}';
 const cssBody = `body {
   background: white;
   font: 1.6em/1.5 Helvetica, "Nimbus Sans L", "Liberation Sans", Roboto, sans-serif;
@@ -33,8 +33,7 @@ const cssA = `a {
 `;
 const cssPseudoClass = `a:hover, a:focus {
   color: gray;
-}
-`;
+}`;
 const enc = 'utf8';
 const styleBack = `${__dirname}/backend/${pref.backend.synced_dirs.styles_dir}/bld/style.css`;
 const styleBld = `${srcCssBldDir}/style.css`;
@@ -111,18 +110,6 @@ describe('fp-sass', function () {
       expect(styleScssScss).to.have.string('}');
     });
 
-    it('prints line comments by default', function () {
-      const styleBldCss = fs.readFileSync(styleBld, enc);
-      const styleLocalPrefCss = fs.readFileSync(styleLocalPref, enc);
-
-      expect(styleBldCss).to.have.string('/* line 3');
-      expect(styleBldCss).to.have.string('/* line 10');
-      expect(styleBldCss).to.have.string('/* line 12');
-      expect(styleLocalPrefCss).to.have.string('/* line 3');
-      expect(styleLocalPrefCss).to.have.string('/* line 11');
-      expect(styleLocalPrefCss).to.have.string('/* line 13');
-    });
-
     it('accepts custom options', function (done) {
       pref.sass.outputStyle = 'compressed';
       pref.sass.sourceComments = false;
@@ -168,26 +155,6 @@ describe('fp-sass', function () {
 
       after(function () {
         pref.sass.sourceComments = true;
-      });
-
-      it('does not write a sourcemap if configured to print line comments', function (done) {
-        pref.sass.sourceComments = true;
-
-        fp.runSeq(
-          'sass',
-          () => {
-            const sourcemapExistsAfter = fs.existsSync(sourcemap);
-            const styleBldCss = fs.readFileSync(styleBld, enc);
-
-            expect(sourcemapExistsBefore).to.be.false;
-            expect(sourcemapExistsAfter).to.be.false;
-            expect(styleBldCss).to.not.have.string('/*# sourceMappingURL=');
-
-            pref.sass.sourceComments = false;
-
-            done();
-          }
-        );
       });
 
       it('writes a sourcemap inline if configured to so', function (done) {
@@ -310,14 +277,6 @@ describe('fp-sass', function () {
       expect(styleBldCss).to.equal(styleBackCss);
       expect(styleLocalPrefCss).to.equal(styleBackAltCss);
     });
-
-    it('copies CSS without sourcemapping to the backend', function () {
-      const styleBackCss = fs.readFileSync(styleBack, enc);
-      const styleBackAltCss = fs.readFileSync(styleBackAlt, enc);
-
-      expect(styleBackCss).to.not.have.string('/*# sourceMappingURL=');
-      expect(styleBackAltCss).to.not.have.string('/*# sourceMappingURL=');
-    });
   });
 
   describe('fp sass:no-comment', function () {
@@ -381,13 +340,6 @@ describe('fp-sass', function () {
       expect(styleLocalPrefCss).to.have.string(cssBody);
       expect(styleLocalPrefCss).to.have.string(cssA);
       expect(styleLocalPrefCss).to.have.string(cssPseudoClass);
-
-      expect(styleBldCss).to.have.string('/* line 3');
-      expect(styleBldCss).to.have.string('/* line 10');
-      expect(styleBldCss).to.have.string('/* line 12');
-      expect(styleLocalPrefCss).to.have.string('/* line 3');
-      expect(styleLocalPrefCss).to.have.string('/* line 11');
-      expect(styleLocalPrefCss).to.have.string('/* line 13');
     });
   });
 
@@ -429,9 +381,6 @@ describe('fp-sass', function () {
           expect(css).to.have.string(cssBody);
           expect(css).to.have.string(cssA);
           expect(css).to.have.string(cssPseudoClass);
-          expect(css).to.have.string('/* line 3');
-          expect(css).to.have.string('/* line 10');
-          expect(css).to.have.string('/* line 12');
 
           watcher.close();
           done();

@@ -3,7 +3,7 @@
 const {Transform} = require('stream');
 
 const gulp = global.gulp || require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const utils = require('fepper-utils');
 
@@ -12,14 +12,6 @@ const pref = global.pref;
 
 // Set up pref.sass.
 pref.sass = pref.sass || {};
-
-// Opt for expanded output and line comments by default.
-if (typeof pref.sass.outputStyle === 'undefined') {
-  pref.sass.outputStyle = 'expanded';
-}
-if (pref.sass.sourceComments !== false) {
-  pref.sass.sourceComments = true;
-}
 
 const cssBldDir = conf.ui.paths.source.cssBld;
 const cssSrcDir = conf.ui.paths.source.cssSrc;
@@ -35,7 +27,6 @@ const streamUntouched = () => new Transform({
 
 function getSourcemapDest() {
   if (
-    pref.sass.sourceComments === false &&
     pref.sass.sourceMap &&
     (!pref.sass.sourceMapContents || !pref.sass.sourceMapEmbed)
   ) {
@@ -46,10 +37,7 @@ function getSourcemapDest() {
 }
 
 function getSourceRoot() {
-  if (
-    pref.sass.sourceComments === false &&
-    pref.sass.sourceMap
-  ) {
+  if (pref.sass.sourceMap) {
     let sourceRoot;
 
     if (pref.sass.sourceMapRoot) {
@@ -84,10 +72,7 @@ gulp.task('sass', function () {
   let sourcemapsInit = sourcemaps.init;
   let sourcemapsWrite = sourcemaps.write;
 
-  // Do not write sourcemaps if pref.sass.sourceMap is falsy.
-  // Do not write sourcemaps if sourceComments === true, as the sourcemaps may be inaccurate and the line comments
-  // redundant.
-  if (!pref.sass.sourceMap || pref.sass.sourceComments) {
+  if (!pref.sass.sourceMap) {
     sourcemapsInit = () => {
       return streamUntouched();
     };
@@ -104,23 +89,10 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(cssBldDir));
 });
 
-gulp.task('sass:frontend-copy', function (cb) {
-  gulp.runSequence(
-    'sass:no-comment',
-    cb
-  );
-});
+gulp.task('sass:frontend-copy', ['sass']);
 
-// This runs the CSS processor without outputting line comments.
-// You probably want this to preprocess CSS destined for production.
-gulp.task('sass:no-comment', function () {
-  const prefSassClone = Object.assign({}, pref.sass, {sourceComments: false});
-
-  return gulp.src(cssSrcDir + '/sass/*@(.sass|.scss)')
-    .pipe(sass(prefSassClone))
-    .on('error', sass.logError)
-    .pipe(gulp.dest(cssBldDir));
-});
+// DEPRECATED.
+gulp.task('sass:no-comment', ['sass']);
 
 gulp.task('sass:once', ['sass']);
 
@@ -129,9 +101,10 @@ gulp.task('sass:watch', function () {
   return gulp.watch('sass/**/*', {cwd: cssSrcDir}, ['sass']);
 });
 
+// DEPRECATED.
 gulp.task('sass:watch-no-comment', function () {
   // Return the watcher so it can be closed after testing.
-  return gulp.watch('sass/**/*', {cwd: cssSrcDir}, ['sass:no-comment']);
+  return gulp.watch('sass/**/*', {cwd: cssSrcDir}, ['sass']);
 });
 
 gulp.task('sass:help', function (cb) {
@@ -144,10 +117,8 @@ Use:
 Tasks:
     fp sass                     Build Fepper's Sass files into frontend CSS.
     fp sass:frontend-copy       Copy Sass-built frontend CSS to backend.
-    fp sass:no-comment          Like 'fp sass' but without line comments.
     fp sass:once                Same as 'fp sass'.
     fp sass:watch               Watch for modifications to Sass files and build when modified.
-    fp sass:watch-no-comment    Like 'fp sass:watch' but without line comments.
     fp sass:help                Print fp-sass tasks and descriptions.
 `;
 

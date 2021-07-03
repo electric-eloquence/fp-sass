@@ -38,19 +38,11 @@ extension. Partials must be nested deeper. Sass code will be preprocessed into
 CSS and built into the `paths.source.cssBld` directory as declared in 
 `patternlab-config.json`.
 
-This extension defaults toward the printing of source comments for debugging 
-purposes. Doing so provides an unambiguous indication that the CSS was 
-preprocessed and that direct edits to the CSS should be avoided. If a project 
-decision is made to style with Sass, it would be a good idea to have version 
-control ignore CSS builds in the `source` directory. This would avoid committing 
-source comments, which could otherwise lead to a morass of conflicts.
-
-Another debugging alternative is writing CSS sourcemaps. (However, this will not 
-work if source comments are enabled.) Add the following to your `pref.yml` file:
+Please use CSS sourcemaps for debugging purposes. Add the following to your 
+`pref.yml` file:
 
 ```yaml
 sass:
-  sourceComments: false
   sourceMap: true
 ```
 
@@ -58,33 +50,31 @@ To write sourcemaps inline, configure as follows:
 
 ```yaml
 sass:
-  sourceComments: false
   sourceMap: true
   sourceMapContents: true
   sourceMapEmbed: true
 ```
 
 Similarly, any 
-<a href="https://github.com/sass/node-sass#options" target="_blank">documented Sass option</a> 
-can be configured in `pref.yml` under the `sass` setting.
+<a href="https://www.npmjs.com/package/sass#api" target="_blank">
+documented Sass option</a> can be configured in `pref.yml` under the `sass` 
+setting.
+
+Newer versions (>= v0.3.0) of `fp-sass` have replaced 
+<a href="https://www.npmjs.com/package/node-sass" target="_blank">Node Sass</a>
+with 
+<a href="https://www.npmjs.com/package/sass" target="_blank">Dart Sass</a>. 
+Source comment support has been replaced by sourcemaps.
 
 ### Tasks
 
 #### `'sass'`
 * Builds Sass into CSS.
 * Overwrites CSS whether or not it has direct edits.
-* Respects the `sass.sourceComments` setting in `pref.yml`.
-* If `sass.sourceComments` is not set, will default to printing source comments.
 
 #### `'sass:frontend-copy'`
 * Usually under gulp task `'custom:frontend-copy'`.
-* Builds Sass without source comments
 * The `frontend-copy` task then copies the CSS to the backend.
-* Ignores any `sass.sourceComments` setting in `pref.yml`.
-
-#### `'sass:no-comment'`
-* Same as `'sass'` and `'sass:once'` but without source comments.
-* Ignores any `sass.sourceComments` setting in `pref.yml`.
 
 #### `'sass:once'`
 * Usually under gulp task `'custom:once'`.
@@ -94,12 +84,6 @@ can be configured in `pref.yml` under the `sass` setting.
 * Usually under gulp task `'custom:watch'`.
 * Watches the `source/_styles/src/sass` directory for file modifications.
 * Triggers `sass` and overwrites CSS whether or not it has direct edits.
-
-#### `'sass:watch-no-comment'`
-* Usually under gulp task `'custom:watch'`.
-* Watches the `source/_styles/src/sass` directory for file modifications.
-* Triggers `sass:no-comment` and overwrites CSS whether or not it has direct 
-  edits.
 
 [snyk-image]: https://snyk.io/test/github/electric-eloquence/fp-sass/master/badge.svg
 [snyk-url]: https://snyk.io/test/github/electric-eloquence/fp-sass/master
